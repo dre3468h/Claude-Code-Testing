@@ -66,7 +66,8 @@ Before handing anything to the verifier:
 - Translations (when translations.ts exists): zh and en key sets identical — check with a
   script/grep, not by eye; report the diff of keys if any.
 - No secrets: `git diff --cached` contains no API keys, tokens, or .env contents.
-- No placeholders left: grep your changed files for `TODO`, `FIXME`, `...`, `省略`.
+- No placeholders left: grep your changed files for `TODO`, `FIXME`, `PLACEHOLDER`,
+  `省略` (do NOT grep for `...` — it matches legitimate TS spread/rest syntax).
 - Copy changes: zh text shown to the user for approval BEFORE commit if meaning/tone moved (§3).
 - Every new/changed .claude/*.md reference: run MAINTENANCE.md §3's reference check.
 

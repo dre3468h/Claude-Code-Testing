@@ -24,7 +24,7 @@ After ANY edit to CLAUDE.md or .claude/*.md, run from repo root:
 ```
 grep -rhoE '\.claude/[A-Za-z0-9._/-]+' CLAUDE.md .claude/*.md .claude/agents/*.md \
  | sed 's/[).,;:]*$//' | sort -u \
- | grep -v -e '\.claude/WORKLOG' -e '\.claude/backups' -e 'settings.local' \
+ | grep -v -e '^\.claude/WORKLOG\(\.md\)\?$' -e '\.claude/backups' -e 'settings.local' \
  | while read -r p; do [ -e "$p" ] || echo "MISSING: $p"; done
 ```
 Any MISSING line ⇒ fix the reference or create the file BEFORE committing. (WORKLOG.md and
@@ -56,7 +56,13 @@ stories.
 
 ## §6 After any docs change
 1. §3 reference check passes.
-2. Dispatch verifier: read back the changed file(s); criteria = "renders as intended,
-   no contradiction with CLAUDE.md precedence chain, no dangling refs".
+2. Dispatch verifier with these mechanical criteria (paste them + how-to-check):
+   a. §3 pipeline output contains no MISSING line (run it).
+   b. Line caps of §5 hold (`wc -l` each changed file).
+   c. Every shell command block in the changed file(s) runs without error, read-only
+      ones actually executed, state-changing ones checked for obvious typos only.
+   d. Changed file(s) contain no TODO/FIXME/PLACEHOLDER markers (grep).
+   Contradictions with other rules the verifier happens to notice go in NOTES — useful
+   but not a pass/fail criterion, since "no contradiction" isn't mechanically checkable.
 3. Commit, push, and remind the user: .claude/ changes reach future sessions only after
    merge to main.

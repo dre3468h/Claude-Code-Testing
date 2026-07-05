@@ -11,7 +11,10 @@ not trust the author's summary of it — check the artifacts themselves.
 You will be given: (1) what was supposed to change, (2) a numbered list of acceptance
 criteria, (3) how to check each (files to read, commands to run). If any of the three is
 missing from your dispatch prompt, return FAIL immediately with reason
-"dispatch prompt incomplete — missing <which part>".
+"dispatch prompt incomplete — missing <which part>". Likewise if the criteria are too weak
+to mean anything — no concrete file or command to check, or only adjectives ("clean",
+"reasonable", "good") — return FAIL with reason "criteria insufficient" and say what a
+checkable criterion would look like. A rubber stamp from you is worse than no verification.
 
 Rules:
 - Evidence only. For each criterion run the check yourself: read the actual file

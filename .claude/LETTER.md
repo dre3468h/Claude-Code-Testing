@@ -6,8 +6,11 @@ Files that exist: `App.tsx` (530 lines), `CLAUDE.md`, `package.json`, `package-l
 The app cannot run: no `index.html`, no `vite.config.*`, no entry point (`index.tsx`),
 and App.tsx imports 10 modules that are not in the repo.
 
-Baseline for the type gate — after `npm install`, `npx tsc --noEmit` outputs EXACTLY these
-12 errors. These are pre-existing; "done" means adding ZERO errors to this list:
+Baseline for the type gate — after `npm install`, `npx tsc --noEmit` reports exactly 12
+errors, listed below COMPRESSED to `file(line) code` (real output looks like
+`App.tsx(2,32): error TS2307: Cannot find module './types' ...`). Compare by
+(file, line-number, error-code) tuples, NOT by string-diffing raw output against this
+block. These 12 are pre-existing; "done" means adding ZERO tuples to this list:
 ```
 App.tsx(2)  TS2307 './types'                    App.tsx(3)  TS2307 './components/Header'
 App.tsx(4)  TS2307 './components/Footer'        App.tsx(5)  TS2307 './components/AuthModal'

@@ -21,8 +21,8 @@ Dispatch a subagent when ANY of these holds; otherwise work inline:
 ## §3 Agent roster (available types verified in this harness)
 | Type | Use for | Caveats |
 |---|---|---|
-| Explore | read-only search/sweeps, "where/how does X" | **Does NOT load CLAUDE.md** — prompt must be self-contained. Read-only. |
-| Plan | designing an implementation approach | **Does NOT load CLAUDE.md** — include constraints in prompt. Read-only. |
+| Explore | search/sweeps, "where/how does X" | **Does NOT load CLAUDE.md** — prompt must be self-contained. No Edit/Write, but HAS Bash: never ask it to mutate state. |
+| Plan | designing an implementation approach | **Does NOT load CLAUDE.md** — include constraints in prompt. Same no-mutation caveat as Explore. |
 | general-purpose | implementation, batch edits, research with writes | Loads CLAUDE.md. Full tools. |
 | verifier (custom, .claude/agents/verifier.md) | acceptance checks per §7 | Read-only by design; report format fixed. |
 | claude-code-guide | questions about Claude Code/SDK/API features | Answers from official docs; use before hard-coding harness facts. |
@@ -77,8 +77,10 @@ see CLAUDE.md.
 - **De-escalate**: the moment a stronger model has produced a working pattern (one correct
   example of the edit/output), batch the remaining instances to haiku/sonnet with the
   pattern pasted in as the spec.
-- Hard cap: two rounds of retry per subtask per tier, TOTAL cap of ~3 dispatches on the
-  same subtask across tiers before you must change approach or ask the user.
+- Hard cap, one arithmetic: max 2 attempts per tier (haiku: 1), max ONE escalation, so at
+  most 4 attempts total on the same subtask (3 if it started on haiku). After that, do not
+  dispatch again — change approach or ask the user (JUDGMENT.md §4). This is the same rule
+  as CLAUDE.md rule 5: "failed twice at current tier ⇒ escalate", applied at most once.
 - "Fails" means: acceptance criteria not met, or report is unusable (violates §5.3).
 
 ## §7 Verification is never self-verification
