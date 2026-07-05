@@ -24,7 +24,7 @@ After ANY edit to CLAUDE.md or .claude/*.md, run from repo root:
 ```
 grep -rhoE '\.claude/[A-Za-z0-9._/-]+' CLAUDE.md .claude/*.md .claude/agents/*.md \
  | sed 's/[).,;:]*$//' | sort -u \
- | grep -v -e '\.claude/WORKLOG\.md' -e '\.claude/backups' -e 'settings.local' \
+ | grep -v -e '\.claude/WORKLOG' -e '\.claude/backups' -e 'settings.local' \
  | while read -r p; do [ -e "$p" ] || echo "MISSING: $p"; done
 ```
 Any MISSING line ⇒ fix the reference or create the file BEFORE committing. (WORKLOG.md and
